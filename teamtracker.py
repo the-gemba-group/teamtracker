@@ -436,19 +436,26 @@ def show_match():
     with col1:
         if st.button("Restart Match", key="restart_btn"):
             names = st.session_state.players
-            # Reset match state
+
+            # 1) Clear the “match finished” state
+            st.session_state.match_finished = False
+
+            # 2) Reset match state
             st.session_state.quarter_running    = False
             st.session_state.quarter_number     = 1
             st.session_state.quarter_start_time = 0.0
             st.session_state.last_update_time   = 0.0
             st.session_state.alert_msg          = ""
-            # Reset per-player data
+
+            # 3) Reset per-player data
             st.session_state.position_time      = {n:{"Forward":0,"Midfield":0,"Defence":0} for n in names}
             st.session_state.current_positions  = {n:"Off" for n in names}
             st.session_state.rotations          = {n:0 for n in names}
-            # Clear quarter summaries
+
+            # 4) Clear quarter summaries
             st.session_state.quarter_reports    = {}
             st.session_state.quarter_durations  = {}
+
             st.success("Match reset! Player list preserved.")
             st.rerun()
 
